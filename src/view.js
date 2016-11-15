@@ -4,6 +4,8 @@ const Debug = require('debug');
 const format = require('util').format;
 const Backbone = require('backbone');
 
+const Woowahan = require('./woowahan');
+
 const PluginText = require('./plugin/text');
 const PluginInputText = require('./plugin/input-text');
 const PluginCheckbox = require('./plugin/checkbox');
@@ -348,21 +350,22 @@ View = Backbone.View.extend({
   },
 
   setModel(attrs) {
-    if (attrs instanceof Backbone.Model) {
+    if (attrs instanceof Woowahan.Model) {
       if (!!this.model) {
         this._unbindModel();
       }
-      
+
       this.model = attrs.clone();
-      
+
       if (this._viewMounted) {
         this._bindModel();
       }
+
       return;
     }
 
-    if (Object.prototype.toString.call(attrs) === '[object Null]' || !this.model || !(this.model instanceof Backbone.Model)) {
-      this.model = new Backbone.Model();
+    if (Object.prototype.toString.call(attrs) === '[object Null]' || !this.model || !(this.model instanceof Woowahan.Model)) {
+      this.model = new Woowahan.Model();
 
       if (this._viewMounted) {
         this._bindModel();
@@ -376,11 +379,41 @@ View = Backbone.View.extend({
         this.model.set(attr, attrs[attr]);
       }
     }
+
+    //
+    // if (attrs instanceof Backbone.Model) {
+    //   if (!!this.model) {
+    //     this._unbindModel();
+    //   }
+    //
+    //   this.model = attrs.clone();
+    //
+    //   if (this._viewMounted) {
+    //     this._bindModel();
+    //   }
+    //   return;
+    // }
+    //
+    // if (Object.prototype.toString.call(attrs) === '[object Null]' || !this.model || !(this.model instanceof Backbone.Model)) {
+    //   this.model = new Backbone.Model();
+    //
+    //   if (this._viewMounted) {
+    //     this._bindModel();
+    //   }
+    // }
+    //
+    // for(let attr in attrs) {
+    //   let value = this.model.get(attr);
+    //
+    //   if (value !== attrs[attr]) {
+    //     this.model.set(attr, attrs[attr]);
+    //   }
+    // }
   },
 
   getModel(key) {
-    if (!this.model || !(this.model instanceof Backbone.Model)) {
-      this.model = new Backbone.Model();
+    if (!this.model || !(this.model instanceof Woowahan.Model)) {
+      this.model = new Woowahan.Model();
     }
     
     if (!key) {

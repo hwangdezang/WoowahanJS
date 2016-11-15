@@ -49,7 +49,6 @@ if (global.__backboneAgent) {
 
 global._ = _;
 
-Backbone.Model.prototype.idAttribute = '___ID_ATTR___';
 Backbone.View.prototype.viewname = '___WOOWA_VIEW___';
 
 class Woowahan {
@@ -264,6 +263,11 @@ Object.assign(Woowahan.prototype, Backbone.Events);
 
 Woowahan.$ = Backbone.$;
 
+Woowahan.Model          = require('./model');
+Woowahan.Collection     = require('./collection');
+
+module.exports = global.Woowahan = Woowahan;
+
 Woowahan.View           = require('./view')(toolset);
 Woowahan.Reducer        = require('./reducer')(toolset);
 Woowahan.Error          = require('./error');
@@ -277,8 +281,9 @@ Woowahan.Popup          = require('./popup');
 Woowahan.Component      = require('./component');
 Woowahan.Plugin         = require('./plugin');
 
-module.exports = global.Woowahan = Woowahan;
-
 /** components */
 Woowahan.CollectionView = require('./collection-view')(toolset);
 Woowahan.ItemView       = require('./item-view')(toolset);
+
+/** defaults */
+Woowahan.Model.prototype.idAttribute = '___ID_ATTR___';

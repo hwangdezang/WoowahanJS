@@ -1,10 +1,9 @@
 const Backbone = require('backbone');
 const Woowahan = require('./woowahan');
-const events = require('./events');
 
 const ListViewEvents = [
-  events.SELECTED_ROW,
-  events.SELECTED_CELL
+  'selectedRow',
+  'selectedCell'
 ];
 
 let CollectionView;
@@ -16,7 +15,7 @@ CollectionView = Woowahan.View.create('CollectionView', {
   },
 
   initialize() {
-    this.collection = this.collection || new Backbone.Collection();
+    this.collection = this.collection || new Woowahan.Collection();
     this.collection.on('add', this.addRowView, this);
 
     this.rowViews = [];
@@ -52,7 +51,7 @@ CollectionView = Woowahan.View.create('CollectionView', {
   },
 
   reload(data) {
-    if (this.collection instanceof Backbone.Collection) {
+    if (this.collection instanceof Woowahan.Collection) {
       let model;
 
       while (model = this.collection.first()) {

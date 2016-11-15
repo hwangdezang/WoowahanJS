@@ -1,6 +1,5 @@
 /*global _*/
 const Woowahan = require('./woowahan');
-const events = require('./events');
 
 let ItemView;
 let app;
@@ -22,7 +21,7 @@ ItemView = Woowahan.View.create('ItemView', {
   _onSelectedRow(event) {
     if (this.onSelectedRow && typeof this.onSelectedRow === 'function') {
       this.onSelectedRow(event, function(...args) {
-        this.trigger.apply(this, _.concat(events.SELECTED_ROW, args));
+        this.trigger.apply(this, _.concat('selectedRow', args));
       }.bind(this));
     }
   },
@@ -30,7 +29,7 @@ ItemView = Woowahan.View.create('ItemView', {
   _onSelectedCell(event) {
     if (this.onSelectedCell && typeof this.onSelectedCell === 'function') {
       this.onSelectedRow(event, function(...args) {
-        this.trigger.apply(this, Array.prototype.concat.call(events.SELECTED_CELL, args));
+        this.trigger.apply(this, Array.prototype.concat.call('selectedCell', args));
       }.bind(this));
     }
   }
